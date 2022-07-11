@@ -17,21 +17,31 @@ export default {
   data() {
     return {
       todoItems: [],
+      cnt: 0,
     };
   },
   methods: {
     addTodo(todoItem) {
-      this.todoItems.push(todoItem);
+      this.todoItems.push({
+        key: this.cnt++,
+        value: todoItem,
+      });
     },
     clearTodo() {
       this.todoItems.splice(0);
     },
-    removeTodo(idx) {
-      this.todoItems.splice(idx, 1);
+    removeTodo(key) {
+      this.todoItems.forEach((item, idx) => {
+        if (item.key === key) {
+          this.todoItems.splice(idx, 1);
+        }
+      });
+      // this.todoItems.splice(idx, 1);
     },
     changeValue() {
       const json = JSON.stringify(this.todoItems);
       localStorage.setItem("data-todoItems", json);
+      localStorage.setItem("cnt", this.cnt);
     },
   },
   components: {
@@ -47,6 +57,9 @@ export default {
       todoItems.forEach((item) => {
         this.todoItems.push(item);
       });
+      const cnt = localStorage.getItem("cnt");
+      //새로고침 했을때 마지막 cnt값에서 시작할 수 있또록
+      this.cnt = cnt;
     }
   },
   watch: {
