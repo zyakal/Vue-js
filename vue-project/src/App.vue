@@ -26,7 +26,7 @@ export default {
     clearTodo() {
       this.todoItems.splice(0);
     },
-    removeTodo(todoItem, idx) {
+    removeTodo(idx) {
       this.todoItems.splice(idx, 1);
     },
     changeValue() {

@@ -3,17 +3,13 @@
     <ul>
       <!-- :key="키이름" -->
       <li
-        :key="todoItem" 
+        :key="todoItem"
         v-for="(todoItem, index) in propsItems"
         class="shadow"
       >
         <i class="checkBtn fas fa-check" aria-hidden="true"></i>
         {{ todoItem }}
-        <span
-          class="removeBtn"
-          type="button"
-          @click="removeTodo(todoItem, index)"
-        >
+        <span class="removeBtn" type="button" @click="removeTodo(index)">
           <i class="far fa-trash-alt" aria-hidden="true"></i>
         </span>
       </li>
@@ -27,9 +23,9 @@ export default {
   // 아니면 그냥 배열로 값만?
   props: { propsItems: Array },
   methods: {
-    removeTodo(todoItem, index) {
+    removeTodo(index) {
       // props.propsItems[todoItem];
-      this.$emit("childRemoveTodo", todoItem, index);
+      this.$emit("childRemoveTodo", index);
     },
   },
 };
