@@ -50,13 +50,13 @@ export default {
     addTodo() {
       if (this.newTodoItem.trim() !== "") {
         const value = this.newTodoItem && this.newTodoItem.trim();
-        // localStorage.setItem(value, value);
         this.$emit("childAddTodo", value);
+      } else {
+        this.$emit("modalShowRun");
       }
 
       this.newTodoItem = "";
     },
-    
   },
 };
 </script>

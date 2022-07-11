@@ -20,7 +20,6 @@ export default {
   props: { propsItems: Array },
   methods: {
     removeTodo(key) {
-      // props.propsItems[todoItem];
       this.$emit("childRemoveTodo", key);
     },
   },

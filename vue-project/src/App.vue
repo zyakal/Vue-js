@@ -1,10 +1,16 @@
 <template>
   <div id="app">
     <TodoHeader></TodoHeader>
-    <TodoInput @childAddTodo="addTodo"></TodoInput>
+    <TodoInput @childAddTodo="addTodo" @modalShowRun="modalAlert"></TodoInput>
     <TodoList :propsItems="todoItems" @childRemoveTodo="removeTodo"></TodoList>
     <TodoFooter @clearList="clearTodo"></TodoFooter>
   </div>
+  <AlertModal
+    @close="modalClose"
+    :show="modalShow"
+    body="내용을 입력해 주세요"
+    header="알림창"
+  ></AlertModal>
 </template>
 
 <script>
@@ -12,12 +18,15 @@ import TodoHeader from "./components/todo/TodoHeader.vue";
 import TodoInput from "./components/todo/TodoInput.vue";
 import TodoList from "./components/todo/TodoList.vue";
 import TodoFooter from "./components/todo/TodoFooter.vue";
+import AlertModal from "./components/common/AlertModal.vue";
+
 export default {
   name: "App",
   data() {
     return {
       todoItems: [],
       cnt: 0,
+      modalShow: false,
     };
   },
   methods: {
@@ -43,12 +52,19 @@ export default {
       localStorage.setItem("data-todoItems", json);
       localStorage.setItem("cnt", this.cnt);
     },
+    modalAlert() {
+      this.modalShow = true;
+    },
+    modalClose() {
+      this.modalShow = false;
+    },
   },
   components: {
     TodoHeader,
     TodoInput,
     TodoList,
     TodoFooter,
+    AlertModal,
   },
   created() {
     const json = localStorage.getItem("data-todoItems");
