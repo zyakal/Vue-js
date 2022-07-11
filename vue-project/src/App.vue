@@ -21,16 +21,17 @@ export default {
   },
   methods: {
     addTodo(todoItem) {
-      localStorage.setItem(todoItem, todoItem);
       this.todoItems.push(todoItem);
     },
     clearTodo() {
-      localStorage.clear();
       this.todoItems.splice(0);
     },
     removeTodo(todoItem, idx) {
-      localStorage.removeItem(todoItem);
       this.todoItems.splice(idx, 1);
+    },
+    changeValue() {
+      const json = JSON.stringify(this.todoItems);
+      localStorage.setItem("data-todoItems", json);
     },
   },
   components: {
@@ -40,11 +41,22 @@ export default {
     TodoFooter,
   },
   created() {
-    if (localStorage.length > 0) {
-      for (let i = 0; i < localStorage.length; i++) {
-        this.todoItems.push(localStorage.key(i));
-      }
+    const json = localStorage.getItem("data-todoItems");
+    if (json) {
+      const todoItems = JSON.parse(json);
+      todoItems.forEach((item) => {
+        this.todoItems.push(item);
+      });
     }
+  },
+  watch: {
+    todoItems: {
+      deep: true,
+      // deep 은 주소값 안의 값이 바뀌는걸 감지
+      handler() {
+        this.changeValue();
+      },
+    },
   },
 };
 </script>
