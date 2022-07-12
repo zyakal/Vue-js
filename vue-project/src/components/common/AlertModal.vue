@@ -1,38 +1,33 @@
 <script>
 export default {
+  name: "AlertModal",
   props: {
     show: Boolean,
-    // Boolean에는 modalshow의 값이 들어온다.
     header: String,
-    body: String,
-  },
-  // methods: {
-  //   noAction(e) {
-  //     e.stopPropagation();
-  //   },
-  // },
-};
+    body: String 
+  }
+}
 </script>
 
 <template>
   <Transition name="modal">
     <div v-if="show" class="modal-mask">
-      <div class="modal-wrapper" style="z-index: 10" @click="$emit('close')">
+      <div class="modal-wrapper" style="z-index:10;" @click="$emit('close')">
         <div class="modal-container" @click.stop="">
-          <!-- stop안쓰려면 @click="noAction" -->
           <div class="modal-header">
-            <slot name="header"> {{ header }}</slot>
+            <slot name="header">{{ header }}</slot>
           </div>
 
           <div class="modal-body">
-            <slot name="body">{{ body }} </slot>
+            <slot name="body">{{ body }}</slot>
           </div>
 
           <div class="modal-footer">
-            <slot name="footer">
-              <button class="modal-default-button" @click="$emit('close')">
-                OK
-              </button>
+            <slot name="footer">              
+              <button
+                class="modal-default-button"
+                @click="$emit('close')"
+              >OK</button>
             </slot>
           </div>
         </div>

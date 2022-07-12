@@ -1,37 +1,36 @@
-<template>
+<template>  
   <h1>헬로우</h1>
   <div>{{ hello }}</div>
   <div>{{ hello }}</div>
   <div>{{ hello }}</div>
   <div>{{ hello }}</div>
-  <input type="text" v-model="hello" />
-  <button @click="changeHello">안녕하세요 변경</button>
-  <favorite-singer></favorite-singer>
-  <favorite-singer-props
-    imgSrc="https://www.queen.co.kr/news/photo/202108/365673_104070_2232.jpg"
-  ></favorite-singer-props>
+  <input type="text" v-model="hello">
+  <button v-on:click="changeHello">안녕하세요 변경</button>
+  <FavoriteSinger />
+  <FavoriteSingerProps imgSrc="https://cdn.ize.co.kr/news/photo/202112/50829_60937_3045.jpg" />
 </template>
 
 <script>
-import FavoriteSinger from "./components/FavoriteSinger.vue";
-import FavoriteSingerProps from "./components/FavoriteSingerProps.vue";
+import FavoriteSinger from './components/FavoriteSinger.vue';
+import FavoriteSingerProps from './components/FavoriteSingerProps.vue';
+
 export default {
-  name: "App",
+  name: 'App',
   data() {
     return {
-      hello: "안녕",
-    };
+      hello: "안녕"
+    }    
   },
   methods: {
     changeHello() {
-      this.hello = "안녕하세요";
-    },
+      this.hello = "안녕하세요.";
+    }
   },
   components: {
-    FavoriteSinger,
-    FavoriteSingerProps,
-  },
-};
+    FavoriteSinger, 
+    FavoriteSingerProps
+  }
+}
 </script>
 
 <style>

@@ -1,15 +1,15 @@
 <template>
   <div id="app">
     <TodoHeader></TodoHeader>
-    <TodoInput @childAddTodo="addTodo" @modalShowRun="modalAlert"></TodoInput>
+    <TodoInput @childAddTodo="addTodo" @noInputValue="showModal"></TodoInput>
     <TodoList :propsItems="todoItems" @childRemoveTodo="removeTodo"></TodoList>
-    <TodoFooter @clearList="clearTodo"></TodoFooter>
+    <TodoFooter @clearTodo="clearTodo"></TodoFooter>
   </div>
   <AlertModal
-    @close="modalClose"
     :show="modalShow"
-    body="내용을 입력해 주세요"
     header="알림창"
+    body="내용을 입력해 주세요."
+    @close="hiddenModal"
   ></AlertModal>
 </template>
 
@@ -19,44 +19,57 @@ import TodoInput from "./components/todo/TodoInput.vue";
 import TodoList from "./components/todo/TodoList.vue";
 import TodoFooter from "./components/todo/TodoFooter.vue";
 import AlertModal from "./components/common/AlertModal.vue";
+//import TodoDao from './dao/TodoDao';
+import axios from "axios";
+import DateUtils from "./utils/DateUtils";
 
 export default {
   name: "App",
   data() {
     return {
       todoItems: [],
-      cnt: 0,
       modalShow: false,
     };
   },
   methods: {
-    addTodo(todoItem) {
-      this.todoItems.push({
-        key: this.cnt++,
-        value: todoItem,
-      });
+    showModal() {
+      this.modalShow = true;
     },
-    clearTodo() {
-      this.todoItems.splice(0);
+    hiddenModal() {
+      this.modalShow = false;
+    },
+    addTodo(todoItem) {
+      const param = {
+        todo: todoItem,
+      };
+      axios.post("/todo/index", param).then((res) => {
+        console.log(res);
+        if (res.status === 200 && res.data) {
+          const item = {
+            itodo: res.data.result,
+            todo: todoItem,
+            created_at: DateUtils.getTimestamp(new Date()),
+          };
+          this.todoItems.push(item);
+        }
+      });
     },
     removeTodo(key) {
       this.todoItems.forEach((item, idx) => {
-        if (item.key === key) {
+        if (item.itodo === key) {
           this.todoItems.splice(idx, 1);
+          axios.delete(`/todo/index/${item.itodo}`).then((res) => {
+            console.log(res);
+          });
         }
       });
-      // this.todoItems.splice(idx, 1);
     },
-    changeValue() {
-      const json = JSON.stringify(this.todoItems);
-      localStorage.setItem("data-todoItems", json);
-      localStorage.setItem("cnt", this.cnt);
-    },
-    modalAlert() {
-      this.modalShow = true;
-    },
-    modalClose() {
-      this.modalShow = false;
+    clearTodo() {
+      axios.delete(`/todo/index`).then((res) => {
+        if (res.status === 200 && res.data.result) {
+          this.todoItems.splice(0);
+        }
+      });
     },
   },
   components: {
@@ -67,25 +80,14 @@ export default {
     AlertModal,
   },
   created() {
-    const json = localStorage.getItem("data-todoItems");
-    if (json) {
-      const todoItems = JSON.parse(json);
-      todoItems.forEach((item) => {
-        this.todoItems.push(item);
-      });
-      const cnt = localStorage.getItem("cnt");
-      //새로고침 했을때 마지막 cnt값에서 시작할 수 있또록
-      this.cnt = cnt;
-    }
-  },
-  watch: {
-    todoItems: {
-      deep: true,
-      // deep 은 주소값 안의 값이 바뀌는걸 감지
-      handler() {
-        this.changeValue();
-      },
-    },
+    axios.get("/todo/index").then((res) => {
+      if (res.status === 200 && res.data.length > 0) {
+        res.data.forEach((item) => {
+          this.todoItems.push(item);
+        });
+      }
+      console.log(res);
+    });
   },
 };
 </script>
@@ -102,7 +104,27 @@ input {
 button {
   border-style: groove;
 }
+
+.ctnt {
+  font-size: 1rem;
+}
+.d-flex {
+  display: flex;
+}
+
+.flex-col {
+  flex-direction: column;
+}
+.flex-row {
+  flex-direction: row;
+}
+.grow_1 {
+  flex-grow: 1;
+}
 .shadow {
   box-shadow: 5px 10px 10px rgba(0, 0, 0, 0.03);
+}
+.justify_content_evenly {
+  justify-content: space-evenly;
 }
 </style>

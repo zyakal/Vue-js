@@ -1,20 +1,18 @@
 <template>
-  <img class="imgSize" v-bind:src="imgSrc" />
+    <img class="imgsize" v-bind:src="imgSrc">
 </template>
 
 <script>
 export default {
-  data() {
-    return {
-      imgSrc:
-        "http://image.newsis.com/2022/05/16/NISI20220516_0000997498_web.jpg",
-    };
-  },
-};
+    data() {
+        return {
+            imgSrc: 'http://ticketimage.interpark.com/PlayDictionary/DATA/PlayDic/PlayDicUpload/040009/17/09/0400091709_70038_M.gif'
+        }
+    }
+}
 </script>
 
 <style scoped>
-.imgSize {
-  width: 200px;
-}
+    .imgsize { width: 300px;}
+    
 </style>

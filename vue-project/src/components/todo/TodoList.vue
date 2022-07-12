@@ -1,31 +1,23 @@
 <template>
   <section>
     <transition-group name="list" tag="ul">
-      <!-- :key="키이름" -->
-      <li :key="todoItem.key" v-for="todoItem in propsItems" class="shadow">
+      <li :key="todoItem.itodo" v-for="todoItem in propsItems" class="shadow">
         <i class="checkBtn fas fa-check" aria-hidden="true"></i>
-        {{ todoItem.value }}
-        <span class="removeBtn" type="button" @click="removeTodo(todoItem.key)">
+        <div class="grow_1 d-flex flex-col justify_content_evenly">
+          <div class="ctnt">{{ todoItem.todo }}</div>
+          <div class="small_text">{{ todoItem.created_at }}</div>
+        </div>
+        <span
+          class="removeBtn"
+          type="button"
+          @click="removeTodo(todoItem.itodo)"
+        >
           <i class="far fa-trash-alt" aria-hidden="true"></i>
         </span>
       </li>
     </transition-group>
   </section>
 </template>
-//life cycle?
-<script>
-export default {
-  // 타입까지 정확히 주려면 객체로 props: { todoList: Array} 이렇게 적어야함
-  // 아니면 그냥 배열로 값만?
-  props: { propsItems: Array },
-  methods: {
-    removeTodo(key) {
-      this.$emit("childRemoveTodo", key);
-    },
-  },
-};
-</script>
-
 <style scoped>
 .list-enter-active,
 .list-leave-active {
@@ -34,9 +26,8 @@ export default {
 .list-enter-from,
 .list-leave-to {
   opacity: 0;
-  transform: translateY(-30px);
+  transform: translateY(30px);
 }
-
 ul {
   list-style-type: none;
   padding-left: 0;
@@ -45,9 +36,6 @@ ul {
 }
 li {
   display: flex;
-  min-height: 50px;
-  height: 50px;
-  line-height: 50px;
   margin: 0.5rem 0;
   padding: 0 0.9rem;
   background-color: white;
@@ -56,10 +44,25 @@ li {
 .checkBtn {
   line-height: 50px;
   color: #62acde;
-  margin-right: 5px;
+  margin-right: 10px;
 }
 .removeBtn {
+  line-height: 50px;
   margin-left: auto;
   color: #de4343;
 }
+.small_text {
+  font-size: 0.8rem;
+  color: #828181;
+}
 </style>
+<script>
+export default {
+  props: { propsItems: Array },
+  methods: {
+    removeTodo(key) {
+      this.$emit("childRemoveTodo", key);
+    },
+  },
+};
+</script>
