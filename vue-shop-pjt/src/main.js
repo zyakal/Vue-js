@@ -1,8 +1,8 @@
 import { createApp } from "vue";
 import App from "./App.vue";
-import router from "./router";
 import store from "./store";
+import router from "./router";
 
-createApp(App).use(store).use(router).mount("#app");
+createApp(App).use(router).use(store).mount("#app");
 
-window.kakao.init("5163e514636631346e4ee54608f23de7");
+window.Kakao.init("5163e514636631346e4ee54608f23de7");
