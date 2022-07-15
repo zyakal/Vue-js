@@ -1,7 +1,6 @@
 import { createRouter, createWebHistory } from "vue-router";
 import Home from "../views/Home";
-import BoxOfficeByDay from "../views/BoxOfficeByDay";
-import BoxOfficeByWeek from "../views/BoxOfficeByWeek";
+import BoxOffice from "../views/BoxOffice";
 
 const routes = [
   {
@@ -10,14 +9,14 @@ const routes = [
     component: Home,
   },
   {
-    path: "/boxofficeByday",
-    name: "boxofficeByday",
-    component: BoxOfficeByDay,
+    path: "/boxOfficeByDay",
+    name: "boxOfficeByDay",
+    component: BoxOffice,
   },
   {
-    path: "/boxofficeByweek",
-    name: "boxofficeByweek",
-    component: BoxOfficeByWeek,
+    path: "/boxOfficeByWeek",
+    name: "boxOfficeByWeek",
+    component: BoxOffice,
   },
 ];
 

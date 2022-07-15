@@ -10,12 +10,7 @@
       </tr>
     </thead>
     <tbody>
-      <rank-row
-        v-for="item in list"
-        :key="item.movieCd"
-        :item="item"
-        @click="detail"
-      />
+      <rank-row v-for="item in list" :key="item.movieCd" :item="item" />
 
       <!-- <tr v-for="item in list" :key="item.movieCd"">
         <td>{{ item.rank }}</td>
@@ -36,11 +31,7 @@ export default {
   props: {
     list: Array,
   },
-  methods: {
-    detail(e) {
-      console.log(e);
-    },
-  },
+  methods: {},
 };
 </script>
 

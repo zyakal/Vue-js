@@ -31,6 +31,7 @@ export default {
       const data = await this.getBoxOfficeByDay(targetDt);
       this.list = data.boxOfficeResult.dailyBoxOfficeList;
     },
+    
   },
   created() {
     const d = new Date();

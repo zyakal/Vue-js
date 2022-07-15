@@ -7,6 +7,7 @@ export default {
       baseUrl: "http://www.kobis.or.kr/kobisopenapi/webservice/rest/",
       boxOfficeByDay: "boxoffice/searchDailyBoxOfficeList.json",
       boxOfficeByWeek: "boxoffice/searchWeeklyBoxOfficeList.json",
+      boxOfficeDetail: "movie/searchMovieInfo.json",
     };
   },
   methods: {
@@ -41,5 +42,14 @@ export default {
       const url = this.baseUrl + this.boxOfficeByWeek;
       return await this.$api(url, parameter);
     },
+    async getDetail(movieCd) {
+      const parameter = {
+        key: this.key,
+        movieCd,
+      };
+      const url = this.baseUrl + this.boxOfficeDetail;
+      return await this.$api(url, parameter);
+    },
   },
 };
+

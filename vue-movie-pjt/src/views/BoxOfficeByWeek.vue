@@ -27,8 +27,7 @@ export default {
       this.getData(targetDt);
     },
     async getData(targetDt) {
-      const data = await this.getBoxOfficeByWeek(targetDt);
-      console.log(data);
+      const data = await this.getBoxOfficeByWeek(targetDt);      
       this.list = data.boxOfficeResult.weeklyBoxOfficeList;
     },
   },
