@@ -77,15 +77,17 @@
             </div>
 
             <div class="col-auto" v-if="cate2 !== ''">
-              <select class="form-select" v-model="cate3">
+              <select class="form-select" v-model="selectedCateId">
                 <option
-                  :key="idx"
-                  v-for="(cate, idx) in categoryObj[cate1][cate2]"
+                  :key="cate.id"
+                  :value="cate.id"
+                  v-for="cate in categoryObj[cate1][cate2]"
                 >
-                  {{ cate }}
+                  {{ cate.value }}
                 </option>
               </select>
             </div>
+            {{ selectedCateId }}
           </div>
         </div>
       </div>
@@ -171,15 +173,24 @@ export default {
           cate2 = item.cate2;
           this.categoryObj[cate1][cate2] = [];
         }
-        this.categoryObj[cate1][cate2].push(item.cate3);
+        const obj = {
+          id: item.id,
+          value: item.cate3,
+        };
+        this.categoryObj[cate1][cate2].push(obj);
       });
     },
     changeCate1() {
       this.cate2 = "";
-      this.cate3 = "";
+      this.selectedCateId = "";
     },
     changeCate2() {
-      this.cate3 = "";
+      this.selectedCateId = "";
+    },
+    productInsert() {
+      if (this.product.product_name === "") {
+        return this.$swal("제품명은 필수 입력값입니다.");
+      }
     },
   },
 };
