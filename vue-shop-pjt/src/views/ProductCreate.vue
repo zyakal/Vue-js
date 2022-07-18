@@ -10,6 +10,7 @@
             type="text"
             class="form-control"
             v-model="product.product_name"
+            ref="product_name"
           />
         </div>
       </div>
@@ -22,6 +23,7 @@
               type="number"
               class="form-control"
               v-model="product.product_price"
+              ref="product_price"
             />
             <span class="input-group-text">원</span>
           </div>
@@ -36,6 +38,7 @@
               type="number"
               class="form-control"
               v-model="product.delivery_price"
+              ref="delivery_price"
             />
             <span class="input-group-text">원</span>
           </div>
@@ -188,8 +191,23 @@ export default {
       this.selectedCateId = "";
     },
     productInsert() {
-      if (this.product.product_name === "") {
+      if (this.product.product_name.trim() === "") {
+        this.$refs.product_name.focus();
         return this.$swal("제품명은 필수 입력값입니다.");
+      }
+      if (
+        this.product.product_price === "" ||
+        this.product.product_price === 0
+      ) {
+        this.$refs.product_price.focus();
+        return this.$swal("제품 가격을 입력하세요.");
+      }
+      if (
+        this.product.delivery_price === "" ||
+        this.product.delivery_price === 0
+      ) {
+        this.$refs.delivery_price.focus();
+        return this.$swal("배송비를 입력하세요.");
       }
     },
   },
