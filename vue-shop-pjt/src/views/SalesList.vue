@@ -18,12 +18,21 @@
           </tr>
         </thead>
         <tbody>
-          <tr>
+          <tr :key="a" v-for="(item, a) in productList">
             <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
+            <td>
+              {{ item.product_name }}
+            </td>
+            <td>
+              {{ item.product_price }}
+            </td>
+            <td>
+              {{ item.delivery_price }}
+            </td>
+            <td>
+              {{ item.add_delivery_price }}
+            </td>
+
             <td>
               <button type="button" class="btn btn-info me-1">사진등록</button>
               <button type="button" class="btn btn-warning me-1">수정</button>
@@ -37,7 +46,23 @@
 </template>
 
 <script>
-export default {};
+export default {
+  data() {
+    return {
+      productList: {},
+    };
+  },
+  created() {
+    this.getProduct();
+  },
+  methods: {
+    async getProduct() {
+      const productList = await this.$get("/api/productList2", {});
+      this.productList = productList;
+      console.log(productList);
+    },
+  },
+};
 </script>
 
 <style></style>
