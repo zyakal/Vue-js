@@ -1,8 +1,39 @@
 <template>
-  <div>
-    <h1>SalesList</h1>
-    <router-link class="nav-link" to="/create">제품등록</router-link>
-  </div>
+  <main class="mt-3">
+    <div class="container">
+      <div class="float-end mb-1">
+        <router-link class="nav-link" to="/create">
+          <button type="button" class="btn btn-dark">제품등록</button>
+        </router-link>
+      </div>
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th></th>
+            <th>제품명</th>
+            <th>제품가격</th>
+            <th>배송비</th>
+            <th>추가 배송비</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>
+              <button type="button" class="btn btn-info me-1">사진등록</button>
+              <button type="button" class="btn btn-warning me-1">수정</button>
+              <button type="button" class="btn btn-danger me-1">삭제</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </main>
 </template>
 
 <script>

@@ -6,6 +6,27 @@ import ProductCreate from "../views/ProductCreate";
 import ProductUpdate from "../views/ProductUpdate";
 import SalesList from "../views/SalesList";
 import ImageInsert from "../views/ImageInsert";
+import store from "@/store";
+import swal from "sweetalert2";
+//네비게이션 가드
+
+const requireAuth = () => (to, from, next) => {
+  if (store.state.user.iuser === undefined) {
+    swal.fire("로그인을 하세요.", "", "warning");
+    return;
+  }
+  return next();
+};
+// 이걸 생략, vue구조에 의해...
+// const requireAuth = () => {
+//  (to, from, next) => {
+//   return if (store.state.user.iuser === undefined) {
+//            swal.fire("로그인을 하세요.", "", "warning");
+//            return;
+//            }
+//            return next();
+//         }
+// };
 
 const routes = [
   {
@@ -22,6 +43,7 @@ const routes = [
     path: "/create",
     name: "ProductCreate",
     component: ProductCreate,
+    beforeEnter: requireAuth(),
   },
   {
     path: "/update",

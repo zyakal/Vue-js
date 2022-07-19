@@ -66,6 +66,8 @@
             <div class="col-auto">
               <select class="form-select" v-model="cate1" @change="changeCate1">
                 <option :key="name" v-for="(value, name) of categoryObj">
+                  <!-- vue에서 v-for 에 of를 쓰면 객체를 나열할 수 있도록 배열형태로 바꿔준다 -->
+                  <!-- value에는 value값, name에는 key값  -->
                   {{ name }}
                 </option>
               </select>
@@ -80,7 +82,7 @@
             </div>
 
             <div class="col-auto" v-if="cate2 !== ''">
-              <select class="form-select" v-model="selectedCateId">
+              <select class="form-select" v-model="product.category_id">
                 <option
                   :key="cate.id"
                   :value="cate.id"
@@ -90,7 +92,6 @@
                 </option>
               </select>
             </div>
-            {{ selectedCateId }}
           </div>
         </div>
       </div>
@@ -147,13 +148,12 @@ export default {
         add_delivery_price: 0,
         tags: "",
         outbound_days: 0,
-        category_id: 1,
+        category_id: "",
         seller_id: 1,
       },
       categoryObj: {},
       cate1: "",
       cate2: "",
-      cate3: "",
     };
   },
   created() {
@@ -165,13 +165,16 @@ export default {
       console.log(categoryList);
       let cate1 = "";
       let cate2 = "";
+      let temp = [];
       categoryList.forEach((item) => {
         if (item.cate1 !== cate1) {
           cate1 = item.cate1;
-          this.categoryObj[cate1] = {};
-          cate2 = "";
-        }
 
+          if (!temp.includes(item.cate1)) {
+            temp.push(cate1);
+            this.categoryObj[cate1] = {};
+          }
+        }
         if (item.cate2 !== cate2) {
           cate2 = item.cate2;
           this.categoryObj[cate1][cate2] = [];
@@ -185,10 +188,10 @@ export default {
     },
     changeCate1() {
       this.cate2 = "";
-      this.selectedCateId = "";
+      this.product.category_id = "";
     },
     changeCate2() {
-      this.selectedCateId = "";
+      this.product.category_id = "";
     },
     productInsert() {
       if (this.product.product_name.trim() === "") {
@@ -209,6 +212,25 @@ export default {
         this.$refs.delivery_price.focus();
         return this.$swal("배송비를 입력하세요.");
       }
+      if (this.product.category_id === "") {
+        return this.$swal("카테고리를 선택해주세요");
+      }
+
+      this.$swal
+        .fire({
+          title: "정말 등록 하시겠습니까?",
+          showCancelButton: true,
+          confirmButtonText: "등록",
+          cancelButtonText: "취소",
+        })
+        .then(async (result) => {
+          if (result.isConfirmed) {
+            const res = this.$post("/api/productInsert", this.product);
+            console.log(res);
+            this.$swal.fire("저장되었습니다.", "", "success");
+            this.$router.push({ path: "/sales" });
+          }
+        });
     },
   },
 };
