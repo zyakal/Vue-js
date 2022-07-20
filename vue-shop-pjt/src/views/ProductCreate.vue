@@ -161,8 +161,7 @@ export default {
   },
   methods: {
     async getCategoryList() {
-      const categoryList = await this.$get("/api/categoryList", {});
-      console.log(categoryList);
+      const categoryList = await this.$get("/api/categoryList", {});      
       let cate1 = "";
       let cate2 = "";
       let temp = [];
