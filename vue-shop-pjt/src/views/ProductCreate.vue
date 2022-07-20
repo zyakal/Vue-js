@@ -177,7 +177,10 @@ export default {
         }
         if (item.cate2 !== cate2) {
           cate2 = item.cate2;
-          this.categoryObj[cate1][cate2] = [];
+          if (!temp.includes(item.cate2)) {
+            temp.push(cate2);
+            this.categoryObj[cate1][cate2] = [];
+          }
         }
         const obj = {
           id: item.id,
