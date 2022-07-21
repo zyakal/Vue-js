@@ -42,7 +42,6 @@ export default {
         const fr = new FileReader();
         fr.onload = (e) => {
           resolve(e.target.result);
-          console.log(e.target.result);
         };
         fr.readAsDataURL(file);
       });

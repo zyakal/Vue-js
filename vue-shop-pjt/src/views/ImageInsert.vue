@@ -20,7 +20,7 @@
             <div
               class="col-lg-3 col-md-4 col-sm-2"
               :key="item.id"
-              v-for="(item, idx) in productImage.filter((c) => c.type === 1)"
+              v-for="item in productImage.filter((c) => c.type === 1)"
             >
               <div class="position-relative">
                 <img
